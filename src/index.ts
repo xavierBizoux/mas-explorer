@@ -1,3 +1,4 @@
+import { viyaUrl } from "./const"
 import { displayModulesList } from "./functions/displayModulesList"
 import { displayOutputs } from "./functions/displayOutputs"
 import { displaySearch } from "./functions/displaySearch"
@@ -26,5 +27,20 @@ document.addEventListener("scoringEnded", (event) => {
   if (event instanceof CustomEvent) {
     const outputs = displayOutputs(event.detail.outputs)
     targetDiv?.replaceChildren(outputs)
+  }
+})
+
+document.getElementById("logoutButton")?.addEventListener("click", async () => {
+  try {
+    const resp = await fetch(`${viyaUrl}/SASLogon/logout.do`, {
+      credentials: 'include',
+    })
+    if (resp.status === 200) {
+      window.location.reload()
+    } else {
+      throw new Error('User could not be logged out.')
+    }
+  } catch (e) {
+    console.log(e)
   }
 })
