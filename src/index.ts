@@ -30,17 +30,27 @@ document.addEventListener("scoringEnded", (event) => {
   }
 })
 
-document.getElementById("logoutButton")?.addEventListener("click", async () => {
-  try {
-    const resp = await fetch(`${viyaUrl}/SASLogon/logout.do`, {
-      credentials: 'include',
+
+document.addEventListener("authenticated", () => {
+  if (!document.getElementById("logoutButton")) {
+    const logoutButton = document.createElement("button")
+    logoutButton.className = "btn btn-dark col-1"
+    logoutButton.id = "logoutButton"
+    logoutButton.innerText = "Logout"
+    logoutButton.addEventListener("click", async () => {
+      try {
+        const resp = await fetch(`${viyaUrl}/SASLogon/logout.do`, {
+          credentials: 'include',
+        })
+        if (resp.status === 200) {
+          window.location.reload()
+        } else {
+          throw new Error('User could not be logged out.')
+        }
+      } catch (e) {
+        console.log(e)
+      }
     })
-    if (resp.status === 200) {
-      window.location.reload()
-    } else {
-      throw new Error('User could not be logged out.')
-    }
-  } catch (e) {
-    console.log(e)
+    document.getElementById("top")?.appendChild(logoutButton)
   }
 })

@@ -5,12 +5,13 @@ import { ApiParameters, ApiResponse, Link } from "../interfaces/api"
 let csrfToken: string | null = null
 const sasInstance = new CookieAuthenticationCredential({ url: viyaUrl })
 
-export const callViyaApi = async (link: Link, params ?: ApiParameters): Promise<ApiResponse | null> => {
+export const callViyaApi = async (link: Link, params?: ApiParameters): Promise<ApiResponse | null> => {
     try {
         await sasInstance.checkAuthenticated()
     } catch {
         await sasInstance.loginPopup()
     }
+    document.dispatchEvent(new Event("authenticated"))
     const headers = new Headers
     if (link.type) {
         headers.set("Content-type", `${link.type}+json`)
