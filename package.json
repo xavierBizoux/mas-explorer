@@ -292,7 +292,7 @@
     "vary": "^1.1.2",
     "watchpack": "^2.4.0",
     "wbuf": "^1.7.3",
-    "webpack-dev-middleware": "^5.3.3",
+    "webpack-dev-middleware": "^5.3.4",
     "webpack-merge": "^5.9.0",
     "webpack-sources": "^3.2.3",
     "websocket-driver": "^0.7.4",
